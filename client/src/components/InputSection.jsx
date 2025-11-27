@@ -8,6 +8,7 @@ const InputSection = ({ onAnalyze, isLoading }) => {
     const [jdFile, setJdFile] = useState(null);
     const [resumeFile, setResumeFile] = useState(null);
     const [error, setError] = useState('');
+    const [isUploading, setIsUploading] = useState(false);
 
     const jdFileInputRef = useRef(null);
     const resumeFileInputRef = useRef(null);
@@ -21,6 +22,7 @@ const InputSection = ({ onAnalyze, isLoading }) => {
             return;
         }
 
+        setIsUploading(true);
         try {
             const text = await parsePdf(file);
             if (type === 'jd') {
@@ -34,6 +36,8 @@ const InputSection = ({ onAnalyze, isLoading }) => {
         } catch (err) {
             setError('Failed to parse PDF. Please try copying and pasting the text.');
             console.error(err);
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -78,10 +82,11 @@ const InputSection = ({ onAnalyze, isLoading }) => {
                             />
                             <button
                                 onClick={() => jdFileInputRef.current.click()}
-                                className="text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center transition-colors px-3 py-1.5 rounded-md hover:bg-white dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                                disabled={isUploading}
+                                className="text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center transition-colors px-3 py-1.5 rounded-md hover:bg-white dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <Upload className="w-3.5 h-3.5 mr-1.5" />
-                                Upload PDF
+                                {isUploading ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 mr-1.5" />}
+                                {isUploading ? 'Processing...' : 'Upload PDF'}
                             </button>
                         </div>
                     </div>
@@ -128,10 +133,11 @@ const InputSection = ({ onAnalyze, isLoading }) => {
                             />
                             <button
                                 onClick={() => resumeFileInputRef.current.click()}
-                                className="text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center transition-colors px-3 py-1.5 rounded-md hover:bg-white dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                                disabled={isUploading}
+                                className="text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center transition-colors px-3 py-1.5 rounded-md hover:bg-white dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <Upload className="w-3.5 h-3.5 mr-1.5" />
-                                Upload PDF
+                                {isUploading ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 mr-1.5" />}
+                                {isUploading ? 'Processing...' : 'Upload PDF'}
                             </button>
                         </div>
                     </div>
@@ -166,7 +172,7 @@ const InputSection = ({ onAnalyze, isLoading }) => {
             <div className="flex justify-center pt-4">
                 <button
                     onClick={handleAnalyzeClick}
-                    disabled={isLoading}
+                    disabled={isLoading || isUploading}
                     className="group relative inline-flex items-center justify-center px-8 py-3.5 text-sm font-semibold text-white transition-all duration-200 bg-slate-900 dark:bg-indigo-600 rounded-lg hover:bg-indigo-600 dark:hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 dark:focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/30"
                 >
                     {isLoading ? (
