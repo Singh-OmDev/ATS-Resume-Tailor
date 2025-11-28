@@ -4,18 +4,7 @@ import { Target, Zap, FileCheck } from 'lucide-react';
 import Header from './components/Header';
 import InputSection from './components/InputSection';
 import ResultsSection from './components/ResultsSection';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import { analyzeResume } from './services/api';
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        return <Navigate to="/login" replace />;
-    }
-    return children;
-};
 
 function Dashboard() {
     const [results, setResults] = useState(null);
@@ -33,13 +22,7 @@ function Dashboard() {
             setResults(data);
         } catch (error) {
             console.error("Error analyzing resume:", error);
-            if (error.response && error.response.status === 403) {
-                alert("Session expired. Please login again.");
-                localStorage.removeItem('token');
-                window.location.href = '/login';
-            } else {
-                alert("An error occurred while analyzing the resume. Please try again.");
-            }
+            alert("An error occurred while analyzing the resume. Please try again.");
         } finally {
             setIsLoading(false);
         }
@@ -142,16 +125,7 @@ function App() {
                 <Header darkMode={darkMode} toggleTheme={toggleTheme} />
 
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route
-                        path="/"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
+                    <Route path="/" element={<Dashboard />} />
                 </Routes>
 
                 <footer className="relative z-10 border-t border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm mt-24 transition-colors duration-300">

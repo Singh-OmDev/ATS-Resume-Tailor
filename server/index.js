@@ -7,8 +7,7 @@ const { PDFParse } = require('pdf-parse');
 const Groq = require('groq-sdk');
 const fs = require('fs');
 const path = require('path');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
 
 dotenv.config();
 
@@ -27,20 +26,7 @@ const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
 
-// Secret key for JWT (in production, use .env)
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const USERS_FILE = path.join(__dirname, 'users.json');
 
-// Helper to read/write users
-const getUsers = () => {
-    if (!fs.existsSync(USERS_FILE)) return [];
-    const data = fs.readFileSync(USERS_FILE);
-    return JSON.parse(data);
-};
-
-const saveUsers = (users) => {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
-};
 
 // Routes
 
@@ -67,71 +53,10 @@ app.post('/api/parse-pdf', upload.single('file'), async (req, res) => {
     }
 });
 
-// Auth Routes
-app.post('/api/register', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) {
-            return res.status(400).json({ error: 'All fields are required' });
-        }
 
-        const users = getUsers();
-        if (users.find(u => u.email === email)) {
-            return res.status(400).json({ error: 'User already exists' });
-        }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = { id: Date.now().toString(), name, email, password: hashedPassword };
-
-        users.push(newUser);
-        saveUsers(users);
-
-        res.status(201).json({ message: 'User registered successfully' });
-    } catch (error) {
-        console.error('Registration Error:', error);
-        res.status(500).json({ error: 'Registration failed' });
-    }
-});
-
-app.post('/api/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const users = getUsers();
-        const user = users.find(u => u.email === email);
-
-        if (!user) {
-            return res.status(400).json({ error: 'User not found' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid credentials' });
-        }
-
-        const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
-    } catch (error) {
-        console.error('Login Error:', error);
-        res.status(500).json({ error: 'Login failed' });
-    }
-});
-
-// Middleware to verify token
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) return res.sendStatus(401);
-
-    jwt.verify(token, JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-};
-
-// Analyze Endpoint (Protected)
-app.post('/api/analyze', authenticateToken, async (req, res) => {
+// Analyze Endpoint
+app.post('/api/analyze', async (req, res) => {
     try {
         const { jobDescription, resumeText } = req.body;
 

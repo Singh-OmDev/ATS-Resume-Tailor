@@ -14,14 +14,12 @@ export const parsePdf = async (file) => {
 };
 
 export const analyzeResume = async (jobDescription, resumeText) => {
-    const token = localStorage.getItem('token');
     const response = await axios.post(`${API_URL}/analyze`, {
         jobDescription,
         resumeText,
     }, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
         }
     });
     return response.data;
