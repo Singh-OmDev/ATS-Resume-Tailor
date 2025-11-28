@@ -4,7 +4,7 @@ import { Target, Zap, FileCheck } from 'lucide-react';
 import Header from './components/Header';
 import InputSection from './components/InputSection';
 import ResultsSection from './components/ResultsSection';
-
+import { analyzeResume } from './services/api';
 
 function Dashboard() {
     const [results, setResults] = useState(null);
