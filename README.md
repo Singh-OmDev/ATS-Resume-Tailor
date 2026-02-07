@@ -1,4 +1,4 @@
-# AI ATS Resume Tailor 🚀
+#  ATS Resume Tailor 🚀
 
 
  demo link https://ai-job-description-gamma.vercel.app/
