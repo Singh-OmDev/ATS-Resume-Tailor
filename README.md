@@ -42,7 +42,7 @@ A powerful web application that helps job seekers tailor their resumes to specif
    npm run dev
    ```
 
-3. Open your browser at `http://localhost:5173`.
+3. Open your browser at `http://localhost:5173`
 
 ## 🔑 Environment Variables
 Create a `.env` file in the `server` directory:
