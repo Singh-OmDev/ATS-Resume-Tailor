@@ -7,7 +7,7 @@
  <img width="1898" height="881" alt="image" src="https://github.com/user-attachments/assets/ec6f806e-aa1d-410e-9dca-071564933ee2" />
 
 
-A powerful web application that helps job seekers tailor their resumes to specific job descriptions using advanced AI. It analyzes your resume against a JD, provides an ATS score, and generates optimized content to help you get hired.
+A powerful web application that helps job seekers tailor their resumes to specific job descriptions using advanced AI. It analyzes your resume against a JD, provides an ATS score, and generates optimized content to help you get hired
 
 ##  Key Features
 - **🤖 AI-Powered Analysis**: Uses **Llama 3 (via Groq)** for deep semantic analysis of resumes and JDs.
