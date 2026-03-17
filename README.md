@@ -16,7 +16,7 @@ A powerful web application that helps job seekers tailor their resumes to specif
 - **✍️ Content Optimization**: Automatically generates a tailored **Professional Summary** and **Experience Bullet Points**.
 - **🔐 User Authentication**: Secure Login and Signup functionality to save your progress.
 - **🌓 Dark Mode**: A beautiful, responsive UI with seamless light and dark theme switching.
-- **📄 PDF Support**: Drag-and-drop support for PDF resumes and job descriptions.
+- **📄 PDF Support**: Drag-and-drop support for PDF resumes and job descriptions
 
 ## 🛠️ Tech Stack
 - **Frontend**: React, Vite, Tailwind CSS, Lucide Icons, React Router
