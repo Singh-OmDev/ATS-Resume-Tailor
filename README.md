@@ -13,7 +13,7 @@ A powerful web application that helps job seekers tailor their resumes to specif
 - **🤖 AI-Powered Analysis**: Uses **Llama 3 (via Groq)** for deep semantic analysis of resumes and JDs.
 - **📊 ATS Scoring**: Get a match score (0-100) to see where you stand.
 - **🔍 Smart Insights**: Identifies **Matched Skills**, **Missing Keywords**, and provides actionable **Improvement Tips**
-- **✍️ Content Optimization**: Automatically generates a tailored **Professional Summary** and **Experience Bullet Points**.
+- **✍️ Content Optimization**: Automatically generates a tailored **Professional Summary** and **Experience Bullet Points**
 - **🔐 User Authentication**: Secure Login and Signup functionality to save your progress.
 - **🌓 Dark Mode**: A beautiful, responsive UI with seamless light and dark theme switching.
 - **📄 PDF Support**: Drag-and-drop support for PDF resumes and job descriptions
