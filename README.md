@@ -25,6 +25,7 @@ A powerful web application that helps job seekers tailor their resumes to specif
 - **Security**: BCrypt (Password Hashing), JWT (Authentication)
 - **Processing**: `pdf-parse`
 
+
 ## Setup & Run
 
 1. **Backend**
